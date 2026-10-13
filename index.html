@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathematics Practical Programs</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#172033;--muted:#5d687c;--accent:#3157d5;--line:#dfe5f0;--code:#111827}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55}
+header{background:linear-gradient(135deg,#172554,#3157d5);color:white;padding:32px 18px}
+.wrap{max-width:1000px;margin:auto}
+header h1{margin:0 0 8px;font-size:clamp(25px,4vw,36px)}
+header p{margin:0;color:#e0e7ff}
+main{max-width:1000px;margin:24px auto;padding:0 16px 40px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+input,select{padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:15px;background:white}
+input{flex:1;min-width:220px}
+select{min-width:210px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 5px 18px rgba(23,32,51,.05)}
+.card h2{margin:0 0 6px;font-size:22px}
+.meta{color:var(--muted);font-size:14px;margin:0 0 12px}
+.question{padding:12px 14px;background:#eef2ff;border-left:4px solid var(--accent);border-radius:8px;margin:12px 0}
+.codehead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:14px 0 8px;font-weight:bold}
+button{border:0;border-radius:8px;background:var(--accent);color:white;padding:9px 13px;font-weight:700;cursor:pointer}
+button:hover{filter:brightness(.92)}
+pre{margin:0;background:var(--code);color:#f9fafb;padding:17px;border-radius:10px;overflow:auto;font-size:14px;line-height:1.5}
+code{font-family:Consolas,Monaco,"Courier New",monospace}
+.note{color:var(--muted);font-size:13px;margin-top:14px}
+.hidden{display:none}
+footer{text-align:center;color:var(--muted);padding:18px}
+@media(max-width:600px){.card{padding:15px}pre{font-size:12px}.codehead{align-items:flex-start;flex-direction:column}select{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>Mathematics Practical Programs</h1>
+<p>All methods from the uploaded practical notebook · Simple Python style · Copy code individually</p>
+</div></header>
+<main>
+<div class="tools">
+<input id="search" type="search" placeholder="Search any method or topic...">
+<select id="category"><option value="">All topics</option><option>Root Finding</option><option>Interpolation</option><option>Numerical Integration</option><option>Differential Equations</option></select>
+</div>
+<div id="count" class="note">14 practical programs</div>
+
+<section class="card" data-search="1. bisection method root finding write a python program to find an approximate root using the bisection method.">
+  <h2>1. Bisection Method</h2>
+  <p class="meta">Root Finding</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to find an approximate root using the Bisection Method.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code1',this)">COPY CODE</button></div>
+  <pre><code id="code1">from math import *
+
+def F(x):
+    return x**3 + 3*x - 5
+
+x0 = float(input(&quot;Enter the 1st end of interval &quot;))
+x1 = float(input(&quot;Enter the 2nd end of interval &quot;))
+
+while F(x0)*F(x1) &gt; 0:
+    print(&quot;Enter an interval with opposite signs&quot;)
+    x0 = float(input(&quot;Enter the 1st end of interval &quot;))
+    x1 = float(input(&quot;Enter the 2nd end of interval &quot;))
+
+x2 = (x0+x1)/2
+print(&quot;The interval is&quot;, x0, &quot;to&quot;, x1)
+e = float(input(&quot;Enter the error u want &quot;))
+i = 1
+
+while abs(F(x2)) &gt; e:
+    x2 = (x0+x1)/2
+    if F(x0)*F(x2) &lt; 0:
+        x1 = x2
+    else:
+        x0 = x2
+    i = i+1
+
+print(&quot;The best approximate root is&quot;, round(x2,4))</code></pre>
+</section>
+<section class="card" data-search="2. regula-falsi method root finding write a python program to find an approximate root using the regula-falsi method.">
+  <h2>2. Regula-Falsi Method</h2>
+  <p class="meta">Root Finding</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to find an approximate root using the Regula-Falsi Method.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code2',this)">COPY CODE</button></div>
+  <pre><code id="code2">from math import *
+
+def F(x):
+    return x**3 + 3*x - 5
+
+x0 = float(input(&quot;Enter the 1st end of interval &quot;))
+x1 = float(input(&quot;Enter the 2nd end of interval &quot;))
+
+while F(x0)*F(x1) &gt; 0:
+    print(&quot;Enter an interval with opposite signs&quot;)
+    x0 = float(input(&quot;Enter the 1st end of interval &quot;))
+    x1 = float(input(&quot;Enter the 2nd end of interval &quot;))
+
+x2 = (x0*F(x1)-x1*F(x0))/(F(x1)-F(x0))
+e = float(input(&quot;Enter the error u want &quot;))
+i = 1
+
+while abs(F(x2)) &gt; e:
+    x2 = (x0*F(x1)-x1*F(x0))/(F(x1)-F(x0))
+    if F(x0)*F(x2) &lt; 0:
+        x1 = x2
+    else:
+        x0 = x2
+    i = i+1
+
+print(&quot;The best approximate root is&quot;, round(x2,4))</code></pre>
+</section>
+<section class="card" data-search="3. newton-raphson method root finding write a python program to find an approximate root using the newton-raphson method.">
+  <h2>3. Newton-Raphson Method</h2>
+  <p class="meta">Root Finding</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to find an approximate root using the Newton-Raphson Method.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code3',this)">COPY CODE</button></div>
+  <pre><code id="code3">from math import *
+
+def F(x):
+    return x**3 + 3*x - 5
+
+def G(x):
+    return 3*x**2 + 3
+
+x0 = float(input(&quot;Enter the first number &quot;))
+e = float(input(&quot;Enter the error u want &quot;))
+i = 1
+x1 = x0 - F(x0)/G(x0)
+
+while abs(x1-x0) &gt; e:
+    x0 = x1
+    x1 = x0 - F(x0)/G(x0)
+    i = i+1
+
+print(&quot;The best approximate root is&quot;, round(x1,6))</code></pre>
+</section>
+<section class="card" data-search="4. square root method root finding write a python program to find the square root by iteration.">
+  <h2>4. Square Root Method</h2>
+  <p class="meta">Root Finding</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to find the square root by iteration.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code4',this)">COPY CODE</button></div>
+  <pre><code id="code4">from math import *
+
+a = float(input(&quot;Enter the number whose square root is to be found &quot;))
+x0 = float(input(&quot;Enter the initial value &quot;))
+e = float(input(&quot;Enter the error u want &quot;))
+
+while abs(x0*x0-a) &gt; e:
+    x1 = 0.5*(x0+a/x0)
+    x0 = x1
+
+print(&quot;The approximate square root is&quot;, round(x0,6))</code></pre>
+</section>
+<section class="card" data-search="5. newton&#x27;s forward difference table interpolation write a python program to construct newton&#x27;s forward difference table and estimate y for a given x.">
+  <h2>5. Newton&#x27;s Forward Difference Table</h2>
+  <p class="meta">Interpolation</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to construct Newton&#x27;s forward difference table and estimate y for a given x.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code5',this)">COPY CODE</button></div>
+  <pre><code id="code5">from math import *
+
+n = int(input(&quot;Enter the number of data points &quot;))
+x = zeros(n)
+y = zeros((n,n))
+
+for i in range(n):
+    x[i] = float(input(&quot;Enter x value &quot;))
+    y[i,0] = float(input(&quot;Enter y value &quot;))
+
+for j in range(1,n):
+    for i in range(n-j):
+        y[i,j] = y[i+1,j-1]-y[i,j-1]
+
+print(&quot;The forward difference table is&quot;)
+for i in range(n):
+    print(x[i], end=&quot;  &quot;)
+    for j in range(n-i):
+        print(round(y[i,j],4), end=&quot;  &quot;)
+    print()
+
+xp = float(input(&quot;Enter the value of x to find y &quot;))
+h = x[1]-x[0]
+p = (xp-x[0])/h
+s = y[0,0]
+term = 1
+
+for i in range(1,n):
+    term = term*(p-i+1)/i
+    s = s+term*y[0,i]
+
+print(&quot;The value of y is&quot;, round(s,4))</code></pre>
+</section>
+<section class="card" data-search="6. newton&#x27;s backward difference table interpolation write a python program to construct newton&#x27;s backward difference table and estimate y for a given x.">
+  <h2>6. Newton&#x27;s Backward Difference Table</h2>
+  <p class="meta">Interpolation</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to construct Newton&#x27;s backward difference table and estimate y for a given x.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code6',this)">COPY CODE</button></div>
+  <pre><code id="code6">from math import *
+
+n = int(input(&quot;Enter the number of data points &quot;))
+x = zeros(n)
+y = zeros((n,n))
+
+for i in range(n):
+    x[i] = float(input(&quot;Enter x value &quot;))
+    y[i,0] = float(input(&quot;Enter y value &quot;))
+
+for j in range(1,n):
+    for i in range(n-1,j-1,-1):
+        y[i,j] = y[i,j-1]-y[i-1,j-1]
+
+print(&quot;The backward difference table is&quot;)
+for i in range(n):
+    print(x[i], end=&quot;  &quot;)
+    for j in range(i+1):
+        print(round(y[i,j],4), end=&quot;  &quot;)
+    print()
+
+xp = float(input(&quot;Enter the value of x to find y &quot;))
+h = x[1]-x[0]
+p = (xp-x[n-1])/h
+s = y[n-1,0]
+term = 1
+
+for i in range(1,n):
+    term = term*(p+i-1)/i
+    s = s+term*y[n-1,i]
+
+print(&quot;The value of y is&quot;, round(s,4))</code></pre>
+</section>
+<section class="card" data-search="7. divided difference table interpolation write a python program to construct a divided difference table and estimate y for a given x.">
+  <h2>7. Divided Difference Table</h2>
+  <p class="meta">Interpolation</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to construct a divided difference table and estimate y for a given x.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code7',this)">COPY CODE</button></div>
+  <pre><code id="code7">from math import *
+
+n = int(input(&quot;Enter the number of data points &quot;))
+x = zeros(n)
+d = zeros((n,n))
+
+for i in range(n):
+    x[i] = float(input(&quot;Enter x value &quot;))
+    d[i,0] = float(input(&quot;Enter y value &quot;))
+
+for j in range(1,n):
+    for i in range(n-j):
+        d[i,j] = (d[i+1,j-1]-d[i,j-1])/(x[i+j]-x[i])
+
+print(&quot;The divided difference table is&quot;)
+for i in range(n):
+    print(x[i], end=&quot;  &quot;)
+    for j in range(n-i):
+        print(round(d[i,j],4), end=&quot;  &quot;)
+    print()
+
+xp = float(input(&quot;Enter the value of x to find y &quot;))
+s = d[0,0]
+p = 1
+
+for i in range(1,n):
+    p = p*(xp-x[i-1])
+    s = s+p*d[0,i]
+
+print(&quot;The value of y is&quot;, round(s,4))</code></pre>
+</section>
+<section class="card" data-search="8. lagrange interpolation interpolation write a python program to find y using lagrange&#x27;s interpolation formula.">
+  <h2>8. Lagrange Interpolation</h2>
+  <p class="meta">Interpolation</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to find y using Lagrange&#x27;s interpolation formula.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code8',this)">COPY CODE</button></div>
+  <pre><code id="code8">from math import *
+
+n = int(input(&quot;Enter the number of data points &quot;))
+x = zeros(n)
+y = zeros(n)
+
+for i in range(n):
+    x[i] = float(input(&quot;Enter x value &quot;))
+    y[i] = float(input(&quot;Enter y value &quot;))
+
+xp = float(input(&quot;Enter the value of x to find y &quot;))
+s = 0
+
+for i in range(n):
+    temp = y[i]
+    for j in range(n):
+        if i != j:
+            temp = temp*(xp-x[j])/(x[i]-x[j])
+    s = s+temp
+
+print(&quot;The value of y is&quot;, round(s,4))</code></pre>
+</section>
+<section class="card" data-search="9. simpson&#x27;s 1/3 rule numerical integration write a python program to evaluate an integral using simpson&#x27;s 1/3 rule.">
+  <h2>9. Simpson&#x27;s 1/3 Rule</h2>
+  <p class="meta">Numerical Integration</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to evaluate an integral using Simpson&#x27;s 1/3 Rule.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code9',this)">COPY CODE</button></div>
+  <pre><code id="code9">from numpy import *
+from math import *
+
+def F(x):
+    return x**2 + 2*x - 10
+
+x0 = float(input(&quot;Enter the lower limit &quot;))
+xn = float(input(&quot;Enter the upper limit &quot;))
+n = int(input(&quot;Enter the number of subintervals (even number) &quot;))
+h = (xn-x0)/n
+d = zeros((n+1,2))
+
+for i in range(n+1):
+    d[i,0] = x0+i*h
+    d[i,1] = F(d[i,0])
+
+sum1 = 0
+sum2 = 0
+
+for i in range(1,n):
+    if i%2 == 0:
+        sum2 = sum2+d[i,1]
+    else:
+        sum1 = sum1+d[i,1]
+
+area = h/3*(d[0,1]+d[n,1]+4*sum1+2*sum2)
+print(&quot;The area bounded by curve is&quot;, round(area,4))</code></pre>
+</section>
+<section class="card" data-search="10. simpson&#x27;s 3/8 rule numerical integration write a python program to evaluate an integral using simpson&#x27;s 3/8 rule.">
+  <h2>10. Simpson&#x27;s 3/8 Rule</h2>
+  <p class="meta">Numerical Integration</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to evaluate an integral using Simpson&#x27;s 3/8 Rule.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code10',this)">COPY CODE</button></div>
+  <pre><code id="code10">from numpy import *
+from math import *
+
+def F(x):
+    return x**2 + 2*x - 10
+
+x0 = float(input(&quot;Enter the lower limit &quot;))
+xn = float(input(&quot;Enter the upper limit &quot;))
+n = int(input(&quot;Enter the number of subintervals (multiple of 3) &quot;))
+h = (xn-x0)/n
+d = zeros((n+1,2))
+
+for i in range(n+1):
+    d[i,0] = x0+i*h
+    d[i,1] = F(d[i,0])
+
+sum1 = 0
+sum2 = 0
+
+for i in range(1,n):
+    if i%3 == 0:
+        sum2 = sum2+d[i,1]
+    else:
+        sum1 = sum1+d[i,1]
+
+area = 3*h/8*(d[0,1]+d[n,1]+3*sum1+2*sum2)
+print(&quot;The area bounded by curve is&quot;, round(area,4))</code></pre>
+</section>
+<section class="card" data-search="11. trapezoidal rule numerical integration write a python program to evaluate an integral using the trapezoidal rule.">
+  <h2>11. Trapezoidal Rule</h2>
+  <p class="meta">Numerical Integration</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to evaluate an integral using the Trapezoidal Rule.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code11',this)">COPY CODE</button></div>
+  <pre><code id="code11">from numpy import *
+from math import *
+
+def F(x):
+    return x**2 + 2*x - 10
+
+x0 = float(input(&quot;Enter the lower limit &quot;))
+xn = float(input(&quot;Enter the upper limit &quot;))
+n = int(input(&quot;Enter the number of subintervals &quot;))
+h = (xn-x0)/n
+d = zeros((n+1,2))
+
+for i in range(n+1):
+    d[i,0] = x0+i*h
+    d[i,1] = F(d[i,0])
+
+s = 0
+for i in range(1,n):
+    s = s+d[i,1]
+
+area = h/2*(d[0,1]+d[n,1]+2*s)
+print(&quot;The area bounded by curve is&quot;, round(area,4))</code></pre>
+</section>
+<section class="card" data-search="12. euler&#x27;s method differential equations write a python program to solve a differential equation using euler&#x27;s method.">
+  <h2>12. Euler&#x27;s Method</h2>
+  <p class="meta">Differential Equations</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to solve a differential equation using Euler&#x27;s Method.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code12',this)">COPY CODE</button></div>
+  <pre><code id="code12">from math import *
+
+def F(x,y):
+    return 2*y
+
+x0 = float(input(&quot;Enter the initial value of x &quot;))
+y0 = float(input(&quot;Enter the initial value of y &quot;))
+h = float(input(&quot;Enter the value of h &quot;))
+n = int(input(&quot;Enter the no of iteration &quot;))
+
+for i in range(n):
+    y1 = y0+h*F(x0,y0)
+    print(&quot;The value of y is&quot;, round(y1,4))
+    x0 = x0+h
+    y0 = y1</code></pre>
+</section>
+<section class="card" data-search="13. fourth order runge-kutta method differential equations write a python program to solve a differential equation using the fourth order runge-kutta method.">
+  <h2>13. Fourth Order Runge-Kutta Method</h2>
+  <p class="meta">Differential Equations</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to solve a differential equation using the Fourth Order Runge-Kutta Method.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code13',this)">COPY CODE</button></div>
+  <pre><code id="code13">from math import *
+
+def F(x,y):
+    return 2*y
+
+x0 = float(input(&quot;Enter the initial value of x &quot;))
+y0 = float(input(&quot;Enter the initial value of y &quot;))
+h = float(input(&quot;Enter the value of h &quot;))
+n = int(input(&quot;Enter the no of iteration &quot;))
+
+for i in range(n):
+    k1 = h*F(x0,y0)
+    k2 = h*F(x0+h/2,y0+k1/2)
+    k3 = h*F(x0+h/2,y0+k2/2)
+    k4 = h*F(x0+h,y0+k3)
+    y1 = y0+(1/6)*(k1+2*k2+2*k3+k4)
+    print(&quot;The value of y is&quot;, round(y1,4))
+    x0 = x0+h
+    y0 = y1</code></pre>
+</section>
+<section class="card" data-search="14. second order runge-kutta method differential equations write a python program to solve a differential equation using the second order runge-kutta method.">
+  <h2>14. Second Order Runge-Kutta Method</h2>
+  <p class="meta">Differential Equations</p>
+  <div class="question"><strong>Question:</strong> Write a Python program to solve a differential equation using the Second Order Runge-Kutta Method.</div>
+  <div class="codehead"><span>Program</span><button type="button" onclick="copyCode('code14',this)">COPY CODE</button></div>
+  <pre><code id="code14">from math import *
+
+def F(x,y):
+    return 2*y
+
+x0 = float(input(&quot;Enter the initial value of x &quot;))
+y0 = float(input(&quot;Enter the initial value of y &quot;))
+h = float(input(&quot;Enter the value of h &quot;))
+n = int(input(&quot;Enter the no of iteration &quot;))
+
+for i in range(n):
+    k1 = h*F(x0,y0)
+    k2 = h*F(x0+h,y0+k1)
+    y1 = y0+(1/2)*(k1+k2)
+    print(&quot;The value of y is&quot;, round(y1,4))
+    x0 = x0+h
+    y0 = y1</code></pre>
+</section>
+<p class="note"><strong>Important:</strong> The handwritten PDF gives example functions such as F(x)=x³+3x−5 for root-finding and F(x,y)=2y for differential-equation methods. If your exam question specifies a different function or data table, replace the example function/data accordingly. Simpson's 1/3 rule needs an even number of subintervals; Simpson's 3/8 rule needs a multiple of 3.</p>
+</main>
+<footer>Mathematics Practical · COPY CODE copies only the selected program</footer>
+<script>
+function copyCode(id,button){
+ const code=document.getElementById(id).innerText;
+ if(navigator.clipboard && window.isSecureContext){
+  navigator.clipboard.writeText(code).then(()=>showCopied(button)).catch(()=>fallbackCopy(code,button));
+ }else{fallbackCopy(code,button);}
+}
+function showCopied(button){const old=button.innerText;button.innerText='COPIED!';setTimeout(()=>button.innerText=old,1200);}
+function fallbackCopy(text,button){
+ const area=document.createElement('textarea');area.value=text;area.style.position='fixed';area.style.opacity='0';document.body.appendChild(area);area.select();
+ try{document.execCommand('copy');showCopied(button)}catch(e){alert('Copy failed. Please select and copy the code manually.')}
+ document.body.removeChild(area);
+}
+function filterCards(){
+ const q=document.getElementById('search').value.toLowerCase().trim();
+ const cat=document.getElementById('category').value;
+ let shown=0;
+ document.querySelectorAll('.card').forEach(card=>{
+  const okText=card.innerText.toLowerCase().includes(q);
+  const okCat=!cat || card.querySelector('.meta').innerText===cat;
+  const show=okText&&okCat;card.classList.toggle('hidden',!show);if(show)shown++;
+ });
+ document.getElementById('count').innerText=shown+' practical program'+(shown===1?'':'s');
+}
+document.getElementById('search').addEventListener('input',filterCards);
+document.getElementById('category').addEventListener('change',filterCards);
+</script>
+</body></html>
